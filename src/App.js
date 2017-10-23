@@ -4,11 +4,10 @@ import camioneta from './img/truck.svg';
 import { Image } from 'react-bootstrap';
 import { connect } from "redux-zero/react";
 import { CrearPreguntas, ListarRespuestas, RedesSociales, Flechas, BarraProgreso } from './componentes.js';
-import { getQuestion } from './actions.js';
 import './App.css';
 
-const App = ({ preguntas, completo, comparar, respuestas }) => {
-  const preguntaActual = getQuestion();
+const App = ({ preguntas, contar, completo, comparar, respuestas }) => {
+  const preguntaActual = preguntas[contar];
   return (
     <div className="container">
       <header className="text-center">
@@ -25,10 +24,13 @@ const App = ({ preguntas, completo, comparar, respuestas }) => {
         </div>
         <RedesSociales />
       </div>
+      {!comparar && respuestas.length != 0 &&
+        <Flechas respuestas={respuestas.length} contar={contar} marcar={true} />
+      }
     </div>);
 }
 /*{!comparar && respuestas.length != 0 &&
         <Flechas />
       }*/
-const mapToProps = ({ preguntas, completo, comparar, respuestas }) => ({ preguntas, completo, comparar, respuestas });
+const mapToProps = ({ preguntas, contar, completo, comparar, respuestas }) => ({ preguntas, contar, completo, comparar, respuestas });
 export default connect(mapToProps)(App);

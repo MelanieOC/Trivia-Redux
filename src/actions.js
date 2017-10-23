@@ -1,11 +1,5 @@
 import store from "./store";
 
-export const getQuestion = () => {
-    let questions = [...store.getState().preguntas];
-    let index = store.getState().contar;
-    return questions[index];
-}
-
 export const guardarRespuesta = (value) => {
     let res = [...store.getState().respuestas];
     let index = store.getState().contar;
@@ -33,6 +27,7 @@ export const anterior = () => {
     let questions = [...store.getState().preguntas];
     let contar = store.getState().contar;
     contar--;
+    console.log(contar);
     store.setState({
         contar: contar
     })

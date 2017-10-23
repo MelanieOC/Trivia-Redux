@@ -24,7 +24,7 @@ export const RedesSociales = () => {
 }
 //(e) => model.guardarRespuesta(value)
 //model.respuestas[model.contar] == value
-export const BarraProgreso = ({respuestas, preguntas}) => {
+export const BarraProgreso = ({ respuestas, preguntas }) => {
     return (
         <div id="progreso">
             <div className="progress-label">
@@ -77,21 +77,21 @@ export const ListarRespuestas = ({ comparar, preguntas, respuestas }) => {
                 })
             }
             <div className='text-center'>
-                {comparar && <button className='btn-lg btn-dark' onClick={() => reiniciar()}>Start Again</button>}
-                {!comparar && <button className='btn-lg btn-dark' onClick={() => compararRespuestas()}>Submit</button>}
+                {comparar && <Button className='btn-dark' bsSize="large" onClick={() => reiniciar()}>Start Again</Button>}
+                {!comparar && <Button className='btn-dark' bsSize="large" onClick={() => compararRespuestas()}>Submit</Button>}
             </div>
 
         </div>
     );
 }
 
-export const Flechas = ({ model }) => {
+export const Flechas = ({ respuestas, contar, marcar }) => {
     return (
         <div id="flechas" className="text-center">
-            <Button id="anterior" disabled={!(model.respuestas.length >= model.contar && model.marcar && model.contar)} onClick={() => model.anterior()}>
+            <Button id="anterior" disabled={!(respuestas >= contar && marcar && contar)} onClick={() => anterior()}>
                 <Image src={left} alt="" responsive />
             </Button>
-            <Button id="siguiente" disabled={!(model.respuestas.length > model.contar & model.marcar)} onClick={() => model.siguiente()}>
+            <Button id="siguiente" disabled={!(respuestas > contar & marcar)} onClick={() => siguiente()}>
                 <Image src={right} alt="" responsive />
             </Button>
         </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import left from './img/navigation-left-arrow.svg';
 import right from './img/navigation-right-arrow.svg';
 import { Row, Col, Image, Button, ProgressBar } from 'react-bootstrap';
-import { siguiente, anterior, guardarRespuesta, compararRespuestas, getCorrects, reiniciar } from './actions.js';
+import { siguiente, anterior, guardarRespuesta, compararRespuestas, obtenerCorrectas, reiniciar } from './actions.js';
 
 export const RedesSociales = () => {
     return (
@@ -61,7 +61,7 @@ export const CrearPreguntas = ({ question }) => {
 }
 
 export const ListarRespuestas = ({ comparar, preguntas, respuestas }) => {
-    let correctas = getCorrects();
+    let correctas = obtenerCorrectas();
     let expresion = correctas ? (correctas === preguntas.length ? 'Wow, ' : '') : 'Ooops, ';
     return (
         <div id='respuestas'>

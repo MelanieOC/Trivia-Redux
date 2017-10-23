@@ -32,7 +32,7 @@ export const anterior = () => {
         contar: contar
     })
 }
-export const getCorrects = () => {
+export const obtenerCorrectas = () => {
     let questions = [...store.getState().preguntas];
     let answers = [...store.getState().respuestas];
     return answers.filter((item, index) => item == questions[index].respuesta).length;

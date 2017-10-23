@@ -1,28 +1,23 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import camioneta from './img/truck.svg';
-import { ProgressBar } from 'react-bootstrap';
+import { Image } from 'react-bootstrap';
 import { connect } from "redux-zero/react";
-import { CrearPreguntas, ListarRespuestas, RedesSociales, Flechas } from './componentes.js';
+import { CrearPreguntas, ListarRespuestas, RedesSociales, Flechas, BarraProgreso } from './componentes.js';
 import { getQuestion } from './actions.js';
 import './App.css';
 
-const App = ({ preguntas, contar, completo, comparar, respuestas }) => {
-  const preguntaActual = preguntas[contar];
+const App = ({ preguntas, completo, comparar, respuestas }) => {
+  const preguntaActual = getQuestion();
   return (
     <div className="container">
       <header className="text-center">
-        {!completo && <img src={preguntaActual.imagen} />}
-        {completo && <img src={camioneta} />}
+        {!completo && <Image src={preguntaActual.imagen} />}
+        {completo && <Image src={camioneta} />}
       </header>
       <div className="content">
         {!comparar &&
-          <div id="progreso">
-            <div className="progress-label">
-              {respuestas.length} of {5} answered
-            </div>
-            <ProgressBar now={respuestas.length * 20} />
-          </div>
+          <BarraProgreso respuestas={respuestas.length} preguntas={preguntas.length} />
         }
         <div id="prueba">
           {!completo && <CrearPreguntas question={preguntaActual} />}
@@ -30,11 +25,10 @@ const App = ({ preguntas, contar, completo, comparar, respuestas }) => {
         </div>
         <RedesSociales />
       </div>
-
     </div>);
 }
 /*{!comparar && respuestas.length != 0 &&
         <Flechas />
       }*/
-const mapToProps = ({ preguntas, contar, completo, comparar, respuestas }) => ({ preguntas, contar, completo, comparar, respuestas });
+const mapToProps = ({ preguntas, completo, comparar, respuestas }) => ({ preguntas, completo, comparar, respuestas });
 export default connect(mapToProps)(App);

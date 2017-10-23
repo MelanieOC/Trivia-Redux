@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import left from './img/navigation-left-arrow.svg';
 import right from './img/navigation-right-arrow.svg';
-import { Row, Col, Image, Button } from 'react-bootstrap';
-import { siguiente, guardarRespuesta, compararRespuestas, getCorrects, reiniciar } from './actions.js';
+import { Row, Col, Image, Button, ProgressBar } from 'react-bootstrap';
+import { siguiente, anterior, guardarRespuesta, compararRespuestas, getCorrects, reiniciar } from './actions.js';
 
 export const RedesSociales = () => {
     return (
@@ -24,7 +24,16 @@ export const RedesSociales = () => {
 }
 //(e) => model.guardarRespuesta(value)
 //model.respuestas[model.contar] == value
-
+export const BarraProgreso = ({respuestas, preguntas}) => {
+    return (
+        <div id="progreso">
+            <div className="progress-label">
+                {respuestas} of {preguntas} answered
+            </div>
+            <ProgressBar now={respuestas * 20} />
+        </div>
+    );
+}
 const Opciones = ({ opciones, comparar }) => {
     return (
         <Row className="opciones">

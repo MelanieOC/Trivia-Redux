@@ -29,6 +29,14 @@ export const siguiente = () => {
         contar: contar
     })
 }
+export const anterior = () => {
+    let questions = [...store.getState().preguntas];
+    let contar = store.getState().contar;
+    contar--;
+    store.setState({
+        contar: contar
+    })
+}
 export const getCorrects = () => {
     let questions = [...store.getState().preguntas];
     let answers = [...store.getState().respuestas];

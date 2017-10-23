@@ -2,35 +2,39 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import camioneta from './img/truck.svg';
 import { ProgressBar } from 'react-bootstrap';
+import { connect } from "redux-zero/react";
 import { CrearPreguntas, ListarRespuestas, RedesSociales, Flechas } from './componentes.js';
+import { getQuestion } from './actions.js';
 import './App.css';
 
-const App = ({ model }) => {
+const App = ({ preguntas, contar, completo, comparar, respuestas }) => {
+  const preguntaActual = preguntas[contar];
   return (
     <div className="container">
       <header className="text-center">
-        {!model.completo && <img src={model.preguntas[model.contar].imagen} />}
-        {model.completo && <img src={camioneta} />}
+        {!completo && <img src={preguntaActual.imagen} />}
+        {completo && <img src={camioneta} />}
       </header>
       <div className="content">
-        {!model.comparar &&
+        {!comparar &&
           <div id="progreso">
             <div className="progress-label">
-              {model.respuestas.length} of {model.preguntas.length} answered
+              {respuestas.length} of {5} answered
             </div>
-            <ProgressBar now={model.respuestas.length * 20} />
+            <ProgressBar now={respuestas.length * 20} />
           </div>
         }
         <div id="prueba">
-          {!model.completo && <CrearPreguntas model={model} />}
-          {model.completo && <ListarRespuestas model={model} />}
+          {!completo && <CrearPreguntas question={preguntaActual} />}
+          {completo && <ListarRespuestas comparar={comparar} respuestas={respuestas} preguntas={preguntas} />}
         </div>
         <RedesSociales />
       </div>
-      {!model.comparar && model.respuestas.length != 0 &&
-        <Flechas model={model} />
-      }
+
     </div>);
 }
-
-export default App;
+/*{!comparar && respuestas.length != 0 &&
+        <Flechas />
+      }*/
+const mapToProps = ({ preguntas, contar, completo, comparar, respuestas }) => ({ preguntas, contar, completo, comparar, respuestas });
+export default connect(mapToProps)(App);

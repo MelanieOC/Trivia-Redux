@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import left from './img/navigation-left-arrow.svg';
 import right from './img/navigation-right-arrow.svg';
 import { Row, Col, Image, Button } from 'react-bootstrap';
+import { siguiente, guardarRespuesta, compararRespuestas, getCorrects, reiniciar } from './actions.js';
 
 export const RedesSociales = () => {
     return (
@@ -21,15 +22,17 @@ export const RedesSociales = () => {
         </div>
     );
 }
+//(e) => model.guardarRespuesta(value)
+//model.respuestas[model.contar] == value
 
-const Opciones = ({ model, opciones }) => {
+const Opciones = ({ opciones, comparar }) => {
     return (
         <Row className="opciones">
             {Object.keys(opciones).map((key, index) => {
                 let value = opciones[key];
                 return (
-                    <Col md={4} className={model.respuestas[model.contar] == value ? 'seleccionado' : ''}>
-                        <Button key={index} onClick={(e) => model.guardarRespuesta(value)}>
+                    <Col md={4} className={comparar ? 'seleccionado' : ''}>
+                        <Button key={index} onClick={() => guardarRespuesta(value)}>
                             <span className='letra'>{key}</span>{value}
                         </Button>
                     </Col>
@@ -39,33 +42,34 @@ const Opciones = ({ model, opciones }) => {
     );
 }
 
-export const CrearPreguntas = ({ model }) => {
+export const CrearPreguntas = ({ question }) => {
     return (
         <div>
-            <h1 className="text-center"> {model.preguntas[model.contar].pregunta} </h1>
-            <Opciones model={model} opciones={model.preguntas[model.contar].opciones} />
+            <h1 className="text-center"> {question.pregunta} </h1>
+            <Opciones opciones={question.opciones} comparar={false} />
         </div>
     );
 }
 
-export const ListarRespuestas = ({ model }) => {
-    let expresion = model.correctas ? (model.correctas === model.preguntas.length ? 'Wow, ' : '') : 'Ooops, ';
+export const ListarRespuestas = ({ comparar, preguntas, respuestas }) => {
+    let correctas = getCorrects();
+    let expresion = correctas ? (correctas === preguntas.length ? 'Wow, ' : '') : 'Ooops, ';
     return (
         <div id='respuestas'>
             <h1 className="text-center">
-                {!model.comparar && 'Here are you answers:'}
-                {model.comparar && expresion + model.correctas + ' out of ' + model.preguntas.length + ' correct!'}
+                {!comparar && 'Here are you answers:'}
+                {comparar && expresion + correctas + ' out of ' + preguntas.length + ' correct!'}
             </h1>
             {
-                model.respuestas.map((item, index) => {
-                    let clase = model.comparar ? (item == model.preguntas[index].respuesta ? 'text-success' : 'text-danger') : '';
-                    let contenido = clase == 'text-danger' ? <strong><strike>{item}</strike> {model.preguntas[index].respuesta}</strong> : <strong>{item}</strong>;
-                    return <p className={clase}>{index + 1}. {model.preguntas[index].pregunta} {contenido}</p>;
+                respuestas.map((item, index) => {
+                    let clase = comparar ? (item == preguntas[index].respuesta ? 'text-success' : 'text-danger') : '';
+                    let contenido = clase == 'text-danger' ? <strong><strike>{item}</strike> {preguntas[index].respuesta}</strong> : <strong>{item}</strong>;
+                    return <p className={clase}>{index + 1}. {preguntas[index].pregunta} {contenido}</p>;
                 })
             }
             <div className='text-center'>
-                {model.comparar && <button className='btn-lg btn-dark' onClick={() => model.reiniciar()}>Start Again</button>}
-                {!model.comparar && <button className='btn-lg btn-dark' onClick={() => model.compararRespuestas()}>Submit</button>}
+                {comparar && <button className='btn-lg btn-dark' onClick={() => reiniciar()}>Start Again</button>}
+                {!comparar && <button className='btn-lg btn-dark' onClick={() => compararRespuestas()}>Submit</button>}
             </div>
 
         </div>

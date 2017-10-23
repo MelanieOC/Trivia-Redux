@@ -39,10 +39,13 @@ const preguntas = [
 ]
 
 const initialState = {
-	preguntas: preguntas
+    preguntas: preguntas,
+    contar: 0,
+    completo: false,
+    comparar: false,
+    respuestas:[]
 };
 
 const store = createStore(initialState);
 
-//export default store;
-export default preguntas;
+export default store;

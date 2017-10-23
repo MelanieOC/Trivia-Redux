@@ -1,20 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from "redux-zero/react";
+import store from "./store";
 import './index.css';
 import App from './App';
-import Model from './Model';
-import preguntas from './store.js'
 import registerServiceWorker from './registerServiceWorker';
 
-let model = new Model(preguntas);
-let render = () => {
-  ReactDOM.render(
-    <App model={model} />,
-    document.getElementById('root')
-  );
-};
 
-model.subscribe(render);
-render(); 
-//ReactDOM.render(<App />, document.getElementById('root'));
+const Index = () => (
+	<Provider store={store}>
+		<App />
+	</Provider>
+);
+
+ReactDOM.render(<Index />, document.getElementById('root'));
 registerServiceWorker();
+

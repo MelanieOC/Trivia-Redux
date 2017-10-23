@@ -5,7 +5,7 @@ import { connect } from "redux-zero/react";
 import { CrearPreguntas, ListarRespuestas, RedesSociales, Flechas, BarraProgreso } from './componentes.js';
 import './App.css';
 
-const App = ({ preguntas, contar, completo, comparar, respuestas }) => {
+const App = ({ preguntas, contar, completo, comparar, respuestas, marcar }) => {
   const preguntaActual = preguntas[contar];
   return (
     <div className="container">
@@ -24,10 +24,10 @@ const App = ({ preguntas, contar, completo, comparar, respuestas }) => {
         <RedesSociales />
       </div>
       {!comparar && respuestas.length != 0 &&
-        <Flechas respuestas={respuestas.length} contar={contar} marcar={true} />
+        <Flechas respuestas={respuestas.length} contar={contar} marcar={marcar} />
       }
     </div>);
 }
 
-const mapToProps = ({ preguntas, contar, completo, comparar, respuestas }) => ({ preguntas, contar, completo, comparar, respuestas });
+const mapToProps = ({ preguntas, contar, completo, comparar, respuestas, marcar }) => ({ preguntas, contar, completo, comparar, respuestas, marcar });
 export default connect(mapToProps)(App);

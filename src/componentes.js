@@ -87,10 +87,10 @@ export const ListarRespuestas = ({ comparar, preguntas, respuestas }) => {
 export const Flechas = ({ respuestas, contar, marcar }) => {
     return (
         <div id="flechas" className="text-center">
-            <Button id="anterior" disabled={!(respuestas >= contar && marcar && contar)} onClick={() => anterior()}>
+            <Button id="anterior" disabled={!(respuestas >= contar && contar)} onClick={marcar?() => anterior():''}>
                 <Image src={left} alt="" responsive />
             </Button>
-            <Button id="siguiente" disabled={!(respuestas > contar & marcar)} onClick={() => siguiente()}>
+            <Button id="siguiente" disabled={!(respuestas > contar)} onClick={marcar?() => siguiente():''}>
                 <Image src={right} alt="" responsive />
             </Button>
         </div>

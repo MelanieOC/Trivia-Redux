@@ -22,8 +22,7 @@ export const RedesSociales = () => {
         </div>
     );
 }
-//(e) => model.guardarRespuesta(value)
-//model.respuestas[model.contar] == value
+
 export const BarraProgreso = ({ respuestas, preguntas }) => {
     return (
         <div id="progreso">
@@ -40,7 +39,7 @@ const Opciones = ({ opciones, comparar }) => {
             {Object.keys(opciones).map((key, index) => {
                 let value = opciones[key];
                 return (
-                    <Col md={4} className={comparar ? 'seleccionado' : ''}>
+                    <Col md={4} className={comparar===value ? 'seleccionado' : ''}>
                         <Button key={index} onClick={() => guardarRespuesta(value)}>
                             <span className='letra'>{key}</span>{value}
                         </Button>
@@ -51,11 +50,11 @@ const Opciones = ({ opciones, comparar }) => {
     );
 }
 
-export const CrearPreguntas = ({ question }) => {
+export const CrearPreguntas = ({ question, respuestas, contar }) => {
     return (
         <div>
             <h1 className="text-center"> {question.pregunta} </h1>
-            <Opciones opciones={question.opciones} comparar={false} />
+            <Opciones opciones={question.opciones} comparar={respuestas[contar]} />
         </div>
     );
 }

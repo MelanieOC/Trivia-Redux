@@ -3,11 +3,22 @@ import store from "./store";
 export const guardarRespuesta = (value) => {
     let res = [...store.getState().respuestas];
     let index = store.getState().contar;
-    res[index] = value;
-    store.setState({
-        respuestas: res
-    })
-    siguiente();
+    let marcar = store.getState().marcar;
+    if (marcar) {
+        res[index] = value;
+        store.setState({
+            marcar: false,
+            respuestas: res
+        })
+        let t = setTimeout(() => {
+            siguiente();
+            store.setState({
+                marcar: true
+            })
+        }, 700);
+    }
+
+
 }
 
 export const siguiente = () => {
@@ -26,8 +37,12 @@ export const siguiente = () => {
 export const anterior = () => {
     let questions = [...store.getState().preguntas];
     let contar = store.getState().contar;
+    if (contar === questions.length) {
+        store.setState({
+            completo: false
+        });
+    }
     contar--;
-    console.log(contar);
     store.setState({
         contar: contar
     })

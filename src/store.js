@@ -43,6 +43,7 @@ const initialState = {
     contar: 0,
     completo: false,
     comparar: false,
+    marcar: true,
     respuestas:[]
 };
 

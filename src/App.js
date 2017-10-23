@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import camioneta from './img/truck.svg';
 import { Image } from 'react-bootstrap';
 import { connect } from "redux-zero/react";

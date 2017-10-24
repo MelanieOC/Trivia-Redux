@@ -39,7 +39,7 @@ const Opciones = ({ opciones, comparar }) => {
             {Object.keys(opciones).map((key, index) => {
                 let value = opciones[key];
                 return (
-                    <Col md={4} className={comparar===value ? 'seleccionado' : ''}>
+                    <Col md={4} className={comparar === value ? 'seleccionado' : ''}>
                         <Button key={index} onClick={() => guardarRespuesta(value)}>
                             <span className='letra'>{key}</span>{value}
                         </Button>
@@ -50,11 +50,11 @@ const Opciones = ({ opciones, comparar }) => {
     );
 }
 
-export const CrearPreguntas = ({ question, respuestas, contar }) => {
+export const CrearPreguntas = ({ preguntaActual, respuestas, contar }) => {
     return (
         <div>
-            <h1 className="text-center"> {question.pregunta} </h1>
-            <Opciones opciones={question.opciones} comparar={respuestas[contar]} />
+            <h1 className="text-center"> {preguntaActual.pregunta} </h1>
+            <Opciones opciones={preguntaActual.opciones} comparar={respuestas[contar]} />
         </div>
     );
 }
@@ -71,13 +71,15 @@ export const ListarRespuestas = ({ comparar, preguntas, respuestas }) => {
             {
                 respuestas.map((item, index) => {
                     let clase = comparar ? (item == preguntas[index].respuesta ? 'text-success' : 'text-danger') : '';
-                    let contenido = clase == 'text-danger' ? <strong><strike>{item}</strike> {preguntas[index].respuesta}</strong> : <strong>{item}</strong>;
+                    let contenido = clase == 'text-danger' ?
+                        <strong><strike>{item}</strike> {preguntas[index].respuesta}</strong>
+                        : <strong>{item}</strong>;
                     return <p className={clase}>{index + 1}. {preguntas[index].pregunta} {contenido}</p>;
                 })
             }
             <div className='text-center'>
-                {comparar && <Button className='btn-dark' bsSize="large" onClick={() => reiniciar()}>Start Again</Button>}
-                {!comparar && <Button className='btn-dark' bsSize="large" onClick={() => compararRespuestas()}>Submit</Button>}
+                {comparar && <Button className='btn-dark' bsSize="large" onClick={reiniciar}>Start Again</Button>}
+                {!comparar && <Button className='btn-dark' bsSize="large" onClick={compararRespuestas}>Submit</Button>}
             </div>
 
         </div>
@@ -87,10 +89,10 @@ export const ListarRespuestas = ({ comparar, preguntas, respuestas }) => {
 export const Flechas = ({ respuestas, contar, marcar }) => {
     return (
         <div id="flechas" className="text-center">
-            <Button id="anterior" disabled={!(respuestas >= contar && contar)} onClick={marcar?() => anterior():''}>
+            <Button id="anterior" disabled={!(respuestas >= contar && contar)} onClick={marcar ? anterior : ''}>
                 <Image src={left} alt="" responsive />
             </Button>
-            <Button id="siguiente" disabled={!(respuestas > contar)} onClick={marcar?() => siguiente():''}>
+            <Button id="siguiente" disabled={!(respuestas > contar)} onClick={marcar ? siguiente : ''}>
                 <Image src={right} alt="" responsive />
             </Button>
         </div>

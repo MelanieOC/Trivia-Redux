@@ -17,14 +17,12 @@ export const guardarRespuesta = (value) => {
             })
         }, 700);
     }
-
-
 }
 
 export const siguiente = () => {
-    let questions = [...store.getState().preguntas];
+    let preguntas = [...store.getState().preguntas];
     let contar = store.getState().contar;
-    if (contar === questions.length - 1) {
+    if (contar === preguntas.length - 1) {
         store.setState({
             completo: true
         });
@@ -35,9 +33,9 @@ export const siguiente = () => {
     })
 }
 export const anterior = () => {
-    let questions = [...store.getState().preguntas];
+    let preguntas = [...store.getState().preguntas];
     let contar = store.getState().contar;
-    if (contar === questions.length) {
+    if (contar === preguntas.length) {
         store.setState({
             completo: false
         });
@@ -48,9 +46,9 @@ export const anterior = () => {
     })
 }
 export const obtenerCorrectas = () => {
-    let questions = [...store.getState().preguntas];
-    let answers = [...store.getState().respuestas];
-    return answers.filter((item, index) => item == questions[index].respuesta).length;
+    let preguntas = [...store.getState().preguntas];
+    let respuestas = [...store.getState().respuestas];
+    return respuestas.filter((item, index) => item == preguntas[index].respuesta).length;
 }
 export const compararRespuestas = () => {
     store.setState({
